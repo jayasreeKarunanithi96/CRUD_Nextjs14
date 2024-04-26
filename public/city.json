@@ -1,0 +1,32 @@
+{
+  "cities": {
+    "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur"],
+    "Arunachal Pradesh": ["Itanagar", "Naharlagun"],
+    "Assam": ["Guwahati", "Dibrugarh", "Silchar"],
+    "Bihar": ["Patna", "Gaya", "Bhagalpur"],
+    "Chhattisgarh": ["Raipur", "Bhilai", "Bilaspur"],
+    "Goa": ["Panaji", "Margao", "Vasco da Gama"],
+    "Gujarat": ["Ahmedabad", "Surat", "Vadodara"],
+    "Haryana": ["Faridabad", "Gurgaon", "Panipat"],
+    "Himachal Pradesh": ["Shimla", "Mandi", "Dharamshala"],
+    "Jharkhand": ["Ranchi", "Jamshedpur", "Dhanbad"],
+    "Karnataka": ["Bangalore", "Mysore", "Hubli"],
+    "Kerala": ["Thiruvananthapuram", "Kochi", "Kozhikode"],
+    "Madhya Pradesh": ["Bhopal", "Indore", "Jabalpur"],
+    "Maharashtra": ["Mumbai", "Pune", "Nagpur"],
+    "Manipur": ["Imphal", "Thoubal", "Bishnupur"],
+    "Meghalaya": ["Shillong", "Tura", "Jowai"],
+    "Mizoram": ["Aizawl", "Lunglei", "Champhai"],
+    "Nagaland": ["Kohima", "Dimapur", "Mokokchung"],
+    "Odisha": ["Bhubaneswar", "Cuttack", "Rourkela"],
+    "Punjab": ["Chandigarh", "Ludhiana", "Amritsar"],
+    "Rajasthan": ["Jaipur", "Jodhpur", "Udaipur"],
+    "Sikkim": ["Gangtok", "Namchi", "Gyalshing"],
+    "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai"],
+    "Telangana": ["Hyderabad", "Warangal", "Nizamabad"],
+    "Tripura": ["Agartala", "Udaipur", "Belonia"],
+    "Uttar Pradesh": ["Lucknow", "Kanpur", "Agra"],
+    "Uttarakhand": ["Dehradun", "Haridwar", "Rishikesh"],
+    "West Bengal": ["Kolkata", "Howrah", "Asansol"]
+  }
+}
