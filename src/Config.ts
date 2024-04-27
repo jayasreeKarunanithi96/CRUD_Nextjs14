@@ -1,4 +1,4 @@
-export const Config = {
+export  const Config = {
   name: {
     minCharacters: 2,
     maxCharacters: 50,

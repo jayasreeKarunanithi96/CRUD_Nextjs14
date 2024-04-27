@@ -107,6 +107,14 @@ table {
   border-collapse: collapse;
   width: 100%;
 }
+th{
+  resize:horizontal;
+ overflow:auto
+}
+table tr:first-child  {
+ resize:horizontal;
+ overflow:auto
+}
 
 td, th {
   border: 2px solid #dddddd;
@@ -127,4 +135,9 @@ input{
 select{
    margin:10px;
   padding:5px;
+}
+*:disabled {
+  background-color: rgb(245, 240, 240);
+  color: rgb(0, 0, 0);
+  opacity: 1;
 }

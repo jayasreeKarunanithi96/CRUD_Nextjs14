@@ -1,46 +1,48 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
+import * as React from "react";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { useSelector, useDispatch } from "react-redux";
+import Button from "@mui/material/Button";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import { CLOSE } from "@/services/redux/ModalReducer";
+import { DELETEUSER } from "@/services/redux/GlobalDataReducer";
 
-
-export default function AlertDialog() {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+export default function DeleteUserDialog() {
+  const dispatch = useDispatch();
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
 
   const handleClose = () => {
-    setOpen(false);
+    dispatch(CLOSE());
+  };
+  const handleConfirm = () => {
+    const uuid: string | null = searchParams.get("id") || null;
+     params.forEach((value, key) => {
+      params.delete(key);
+    });
+     router.push(pathname);
+
+    dispatch(DELETEUSER(uuid));
+   
+    dispatch(CLOSE());
   };
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open alert dialog
-      </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-       
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-           Do you to Delete the User Details
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          Do you to Delete the User Details. Please Confirm Before Deleting.?
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleConfirm} autoFocus>
+          Confirm
+        </Button>
+      </DialogActions>
     </React.Fragment>
   );
 }

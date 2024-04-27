@@ -1,100 +1,95 @@
 /* eslint-disable @next/next/no-async-client-component */
 "use client";
-import { User } from "@/interface";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
-
-// Next.js fetch API in action
-const usersData = [
-  {
-    id: 1,
-    name: "John",
-    email: "johndoe1234@gmail.com",
-    linkedinURL: "johndoe",
-    gender: "male",
-    address: {
-      line1: "123 Main St",
-      line2: "Apt 4B",
-      state: "California",
-      city: "Los Angeles",
-      pin: "90001",
-    },
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    email: "janesmith5678@gmail.com",
-    linkedinURL: "janesmith",
-    gender: "female",
-    address: {
-      line1: "456 Elm St",
-      line2: "Suite 7C",
-      state: "New York",
-      city: "New York City",
-      pin: "10001",
-    },
-  },
-  {
-    id: 3,
-    name: "jayasree",
-    email: "jsree1234@gmail.com",
-    linkedinURL: "jjj",
-    gender: "male",
-    address: {
-      line1: "line2",
-      line2: "lin23",
-      state: "tamil nadu",
-      city: "chennai",
-      pin: "6060210",
-    },
-  },
-];
+import CircularProgress from "@mui/material/CircularProgress";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSelector, useDispatch } from "react-redux";
+import { IUser } from "@/interface";
+import { OPEN } from "@/services/redux/ModalReducer";
+import UserForm from "./UserForm";
+import DeleteUserDialog from "@/Components/DeleteDialog";
 
 const UserList = () => {
-  const [expandedRows, setExpandedRows] = useState<any[]>([]);
-  const handleRowClick = (rowId: any) => {
-    const currentExpandedRows = expandedRows.includes(rowId)
-      ? expandedRows.filter((id) => id !== rowId)
-      : [...expandedRows, rowId];
-    setExpandedRows(currentExpandedRows);
-  };
+  const [data, setData] = useState<IUser[]>([]);
+  const storeData = useSelector((state: any) => state.globalData.data);
+  const dispatch = useDispatch();
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+  useEffect(() => {
+    if (storeData?.length > 0) {
+      const filterData = storeData?.filter((i: IUser) => i.active === true);
+      setData(filterData);
+    }
+  }, [storeData]);
+
+  console.log("storeData", storeData);
+  // Handle Edit
   const handleClickEdit = (rowId: any) => {
-    console.log('rowId',rowId)
-    
+    params.set("action", "edit");
+    params.set("id", rowId?.id);
+    const queryString = params.toString();
+    const updatedPath = queryString ? `${pathname}?${queryString}` : pathname;
+    router.push(updatedPath);
+    dispatch(OPEN({ modalComponent: <UserForm /> }));
+  };
+  // Handle Edit
+  const handleClickDelete = (rowId: any) => {
+    params.set("action", "delete");
+    params.set("id", rowId?.id);
+    const queryString = params.toString();
+    const updatedPath = queryString ? `${pathname}?${queryString}` : pathname;
+    router.push(updatedPath);
+    dispatch(OPEN({ modalComponent: <DeleteUserDialog /> }));
+  };
+  const handleClickView = (rowId: any) => {
+    params.set("action", "view");
+    params.set("id", rowId?.id);
+    const queryString = params.toString();
+    const updatedPath = queryString ? `${pathname}?${queryString}` : pathname;
+    router.push(updatedPath);
+    dispatch(OPEN({ modalComponent: <UserForm /> }));
   };
 
   return (
     <>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>LinkedIn URL</th>
-            <th>Address</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {usersData.map((item: any) => (
-          
-              <tr key={item.name}>
-                <td>{item.id}</td>
+      {data.length > 0 ? (
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>LinkedIn URL</th>
+              <th>Address</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((item: IUser) => (
+              <tr key={item.id}>
                 <td>{item.name}</td>
+                <td>{item.email}</td>
                 <td>{item.linkedinURL}</td>
                 <td>
                   {item.address.line1},{item.address.line2},{item.address.city},
-                  {item.address.state}
+                  {item.address.state}, {item.address.pin}
                 </td>
                 <td>
-                  <Button onClick={()=>handleClickEdit(item)}>Edit</Button> <Button>Delete</Button>
-                  <Button>View</Button>
+                  <Button onClick={() => handleClickEdit(item)}>Edit</Button>{" "}
+                  <Button onClick={() => handleClickDelete(item)}>
+                    Delete
+                  </Button>
+                  <Button onClick={() => handleClickView(item)}>View</Button>
                 </td>
               </tr>
-           
-          ))}
-        </tbody>
-      </table>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <CircularProgress color="success" />
+      )}
     </>
   );
 };

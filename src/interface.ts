@@ -1,5 +1,5 @@
-export interface User {
-  id?: String;
+export interface IUser {
+  id?: string;
   name: string;
   email: string;
   linkedinURL: string;
@@ -11,6 +11,6 @@ export interface User {
     city: string;
     pin: string;
   };
-  active:Boolean
+  active?:boolean
  
 }

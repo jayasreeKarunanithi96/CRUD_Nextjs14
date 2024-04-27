@@ -21,7 +21,6 @@ export default function Home() {
         <UserList />
       </Suspense>
       <UserModal/>
-      {/* <UserModal><UserForm/></UserModal> */}
     </main>
   );
 }
