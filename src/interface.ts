@@ -11,5 +11,6 @@ export interface User {
     city: string;
     pin: string;
   };
+  active:Boolean
  
 }

@@ -50,7 +50,7 @@ const usersData = [
   },
 ];
 
-const UserList = async () => {
+const UserList = () => {
   const [expandedRows, setExpandedRows] = useState<any[]>([]);
   const handleRowClick = (rowId: any) => {
     const currentExpandedRows = expandedRows.includes(rowId)
